@@ -6,10 +6,19 @@ void main() {
 
   Solver solver = Solver();
   solver
-      .loadFromAssets('assets/sudoku/easy-001.txt')
+      .loadFromAssets('assets/sudoku/hard-001.txt')
       .then((success) => print('loaded'))
       .catchError((e) => print(e))
-      .whenComplete(() => print("\n${solver.getStatistics()}\n${solver.getVisualRepresentationSideBySide()}"));
+      .whenComplete(() => {
+            solver
+                .solve()
+                .then((success) => print('solved: $success'))
+                .catchError((e) => print(e))
+                .whenComplete(() => print(
+                    '${solver.getStatistics()}'
+                    '\n${solver.getVisualRepresentationSideBySide()}')
+                )
+          });
 }
 
 class MyApp extends StatelessWidget {
