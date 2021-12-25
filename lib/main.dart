@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sudoku/solver.dart';
 
 void main() {
   runApp(const MyApp());
+
+  Solver solver = Solver();
+
+  print("\n${solver.getVisualRepresentation(false)}");
+  print("\n${solver.getVisualRepresentation(true)}");
+  print("\n${solver.getVisualRepresentationSideBySide()}");
 }
 
 class MyApp extends StatelessWidget {
