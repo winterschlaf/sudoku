@@ -5,10 +5,11 @@ void main() {
   runApp(const MyApp());
 
   Solver solver = Solver();
-
-  print("\n${solver.getVisualRepresentation(false)}");
-  print("\n${solver.getVisualRepresentation(true)}");
-  print("\n${solver.getVisualRepresentationSideBySide()}");
+  solver
+      .loadFromAssets('assets/sudoku/easy-001.txt')
+      .then((success) => print('loaded'))
+      .catchError((e) => print(e))
+      .whenComplete(() => print("\n${solver.getStatistics()}\n${solver.getVisualRepresentationSideBySide()}"));
 }
 
 class MyApp extends StatelessWidget {
