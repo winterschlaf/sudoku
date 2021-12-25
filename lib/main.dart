@@ -6,7 +6,7 @@ void main() {
 
   Solver solver = Solver();
   solver
-      .loadFromAssets('assets/sudoku/hard-001.txt')
+      .loadFromAssets('assets/sudoku/hardest-001.txt')
       .then((success) => print('loaded'))
       .catchError((e) => print(e))
       .whenComplete(() => {
