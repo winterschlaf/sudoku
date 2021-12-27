@@ -1,5 +1,3 @@
-import 'dart:math';
-
 // all puzzle are displayed side by side
 // e.g:
 // 1 2 | 3 4    1 . | 3 4    1 2 | 3 4    1 . | 3 4    1 2 | 3 4    1 . | 3 4
@@ -21,6 +19,24 @@ import 'dart:math';
 // . . 1 | . 5 4 | 8 3 .    6 9 1 | 2 5 4 | 8 3 7
 // . . . | . 8 . | 9 . .    5 4 2 | 3 8 7 | 9 1 6
 // . 3 7 | 1 6 . | . . .    8 3 7 | 1 6 9 | 2 4 5
+
+import 'package:sudoku/sudoku/puzzle.dart';
+
+String getVisualRepresentationOfPuzzleSideBySide(Puzzle puzzle) {
+  return getVisualRepresentationSideBySide(
+      [puzzle.original, puzzle.puzzle],
+      puzzle.x,
+      puzzle.x,
+      puzzle.y,
+      puzzle.quadrantX,
+      puzzle.quadrantY,
+      puzzle.noValue,
+      '\n',
+      '    ',
+      ' '
+  );
+}
+
 String getVisualRepresentationSideBySide(
     List<List<int>> puzzles,
     int size,
@@ -28,7 +44,7 @@ String getVisualRepresentationSideBySide(
     int y,
     int quadrantX,
     int quadrantY,
-    int emptyTile,
+    int noValue,
     String newLine,
     String inBetween,
     String paddingCharacter
@@ -37,7 +53,7 @@ String getVisualRepresentationSideBySide(
 
   for (List<int> puzzle in puzzles) {
     visualRepresentation
-        .add(getVisualRepresentation(puzzle, size, x, y, quadrantX, quadrantY, emptyTile, newLine, paddingCharacter));
+        .add(getVisualRepresentation(puzzle, size, x, y, quadrantX, quadrantY, noValue, newLine, paddingCharacter));
   }
 
   String str = '';
@@ -56,6 +72,20 @@ String getVisualRepresentationSideBySide(
   return str;
 }
 
+String getVisualRepresentationOfPuzzle(Puzzle puzzle) {
+  return getVisualRepresentation(
+      puzzle.puzzle,
+      puzzle.x,
+      puzzle.x,
+      puzzle.y,
+      puzzle.quadrantX,
+      puzzle.quadrantY,
+      puzzle.noValue,
+      '\n',
+      ' '
+  );
+}
+
 String getVisualRepresentation(
     List<int> puzzle,
     int size,
@@ -63,7 +93,7 @@ String getVisualRepresentation(
     int y,
     int quadrantX,
     int quadrantY,
-    int emptyTile,
+    int noValue,
     String newLine,
     String paddingCharacter
     ) {
@@ -82,12 +112,12 @@ String getVisualRepresentation(
           ? ' '
           : '';
       int value = puzzle[xx + yy * x];
-      String strValue = value == emptyTile
+      String strValue = value == noValue
           ? '.'
           : value.toString();
       strValue = strValue.padLeft(
         size.toString().length,
-        value == emptyTile
+        value == noValue
             ? paddingCharacter != ' '
                 ? '.'
                 : ' '

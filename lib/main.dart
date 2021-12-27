@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku/output.dart';
-import 'package:sudoku/solver.dart';
+import 'package:sudoku/sudoku/output.dart';
+import 'package:sudoku/sudoku/puzzle.dart';
 
 void main() {
+  //Null check operator used on a null value -> Fix
+  //WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 
-  /*
-  Solver solver = Solver();
-  solver
-      .loadFromAssets('assets/sudoku/hardest-001.txt')
-      .then((success) => print('loaded'))
-      //.catchError((e) => print(e))
-      .whenComplete(() => {
-            solver
-                .solve()
-                .then((success) => print('solved: $success'))
-                //.catchError((e) => print(e))
-                .whenComplete(() => print(
-                    '${solver.getStatistics()}'
-                    '\n${solver.getVisualRepresentationSideBySide()}')
-                )
-          });
-  */
-
-  testVisualRepresentation();
+  //testVisualRepresentation();
+  Puzzle p = Puzzle(9,9,3,3);
+  p
+      .loadFromAssets('assets/sudoku/9x9_3x3_200_normal.txt')
+      .then((success) => print('loaded: $success'))
+      .whenComplete(() {
+        p
+            .solve()
+            .then((success) => print('solved: $success'))
+            .whenComplete(() => print('${p.stopwatch.elapsedMilliseconds}ms\n' + getVisualRepresentationOfPuzzleSideBySide(p)));
+  })
+  ;
 }
 
 void testVisualRepresentation() {
