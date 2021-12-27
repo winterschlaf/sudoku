@@ -10,7 +10,7 @@ void main() {
   //testVisualRepresentation();
   Puzzle p = Puzzle(9,9,3,3);
   p
-      .loadFromAssets('assets/sudoku/9x9_3x3_200_normal.txt')
+      .loadFromAssets('assets/sudoku/9x9_3x3_500_hardest.txt')
       .then((success) => print('loaded: $success'))
       .whenComplete(() {
         p

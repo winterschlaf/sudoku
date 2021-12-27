@@ -24,13 +24,52 @@ class Puzzle {
   Future<bool> solve() async {
     stopwatch.start();
     solveNaively();
+    solveBruteForce();
     stopwatch.stop();
     return isValid();
+  }
+
+  //go over every field and try all entries
+  //stop when you found a valid solution
+  bool solveBruteForce() {
+    //if it solved at any point, abort
+    if(isValid()) {
+      return true;
+    }
+
+    for(int j=0;j<y;j++) {
+      for (int i = 0; i < x; i++) {
+        if (puzzle[i + j * x] == noValue) {
+          //its enough to check a subset
+          for(int value in getAllValidValuesForCurrentPosition(i, j)) {
+            puzzle[i + j * x] = value;
+
+            //try this number and go to next tile
+            if(solveBruteForce()) {
+              return true;
+            }
+
+            //that number dint work out go back
+            puzzle[i + j * x] = noValue;
+          }
+
+          //do not forget to send back that it didn't work
+          return false;
+        }
+      }
+    }
+
+    //at this point everything should be solved, so send back true
+    return true;
   }
 
   //tries to solve the puzzle with a naive approach
   //basically iterates over each tile and checks if there is a unique number which fits
   void solveNaively() {
+    if(isValid()) {
+      return;
+    }
+
     bool changed = true;
 
     while(changed) {
